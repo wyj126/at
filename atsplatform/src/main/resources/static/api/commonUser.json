@@ -1,0 +1,59 @@
+{
+  "clearInfo": {
+    "clearUrl": "api/clear.json"
+  },
+  "homeInfo": {
+    "title": "登记利用",
+    "icon": "fa fa-home",
+    "href": "page/user/register/evidence.html"
+  },
+  "logoInfo": {
+    "title": "湖工大档案馆",
+    "image": "images/logo_1.png",
+    "href": ""
+  },
+  "menuInfo": {
+    "currency": {
+      "title": "远程利用",
+      "icon": "fa fa-address-book",
+      "child": [
+        {
+          "title": "登记利用",
+          "href": "page/user/register/evidence.html",
+          "icon": "fa fa-mortar-board",
+          "target": "_self"
+        },
+        {
+          "title": "成绩翻译",
+          "href": "page/user/transgrade/transgrade.html",
+          "icon": "fa fa-language",
+          "target": "_self"
+        },
+        {
+          "title": "我的申请",
+          "href": "page/user/apply/apply.html",
+          "icon": "fa fa-paper-plane",
+          "target": "_self"
+        },
+        {
+          "title": "个人信息",
+          "href": "page/user/me/edit.html",
+          "icon": "fa fa-user",
+          "target": "_self"
+        },
+        {
+          "title": "常见问题",
+          "href": "page/user/help/help.html",
+          "icon": "fa fa-info-circle",
+          "target": "_self"
+        },
+        {
+          "title": "用户投诉",
+          "href": "page/user/complaint/complaint.html",
+          "icon": "fa fa-smile-o",
+          "target": "_self"
+        }
+      ]
+    }
+  }
+}

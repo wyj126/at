@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<>
+
+<input onclick="exportPdf()" type="submit"/>
+
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script>
+    function exportPdf(){
+        var course =  [{
+            courseName : "math"
+            ,courseCredit : "2.0"
+            ,courseScore : "89"
+        }];
+        course.push({courseName:"chinese",courseCredit:"1.0",courseScore:"99"});
+        course.push({courseName:"java",courseCredit:"3.0",courseScore:"60"});
+        course.push({courseName:"qweqweqweqweqeqwe",courseCredit:"1.0",courseScore:"99"});
+        course.push({courseName:"qweeeeeeeeeeeeeeeeeeeeeeeeeeee",courseCredit:"1.0",courseScore:"99"});
+        course.push({courseName:"sadddddddddddddddddddddddddddddddddddddd",courseCredit:"1.0",courseScore:"99"});
+        var stu = {
+            name : 'Rao ZhiAo'
+            ,stuNum : '1810861106'
+            ,collage : '经济与管理学院'
+            ,major : 'Information management and information system'
+            ,instructor : "Li XiaoSi"
+            ,admissionDate : '09/11/2018'
+            ,course : course
+            ,thesisTopic : "Information management"
+            ,thesisScore : "90"
+            ,type : "1"
+        };
+        $.ajax({
+            url:'/export/registerDoc',
+            type:'POST',
+            dataType: "json",
+            data:JSON.stringify(stu),
+            processData:false,
+            contentType:false,
+            success:function (data) {
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

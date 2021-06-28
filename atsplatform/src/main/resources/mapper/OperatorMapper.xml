@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ats.dao.OperatorDao">
+
+    <resultMap type="com.ats.entity.Operator" id="OperatorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="operatorModule" column="operator_module" jdbcType="VARCHAR"/>
+        <result property="requestUri" column="request_uri" jdbcType="VARCHAR"/>
+        <result property="operatorTime" column="operator_time" jdbcType="TIMESTAMP"/>
+        <result property="operatorIp" column="operator_ip" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OperatorMap">
+        select
+          id, operator_module, request_uri, operator_time, operator_ip
+        from at.operator
+        where id = #{id}
+    </select>
+
+    <!--条件查询（带分页）-->
+    <select id="selectList" parameterType="map" resultMap="OperatorMap">
+        select
+        id, operator_module, request_uri, operator_time, operator_ip
+        from at.operator
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="operatorModule != null and operatorModule != ''">
+                and operator_module = #{operatorModule}
+            </if>
+            <if test="requestUri != null and requestUri != ''">
+                and request_uri = #{requestUri}
+            </if>
+            <if test="operatorTime != null">
+                and operator_time = #{operatorTime}
+            </if>
+            <if test="operatorIp != null and operatorIp != ''">
+                and operator_ip = #{operatorIp}
+            </if>
+        </where>
+        <if test="offset != null and limit !=null">
+            limit ${offset},${limit}
+        </if>
+    </select>
+
+    <!--符合条件总数查询-->
+    <select id="selectListSize" parameterType="map" resultType="java.lang.Integer">
+        select
+        count(*)
+
+        from at.operator
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="operatorModule != null and operatorModule != ''">
+                and operator_module = #{operatorModule}
+            </if>
+            <if test="requestUri != null and requestUri != ''">
+                and request_uri = #{requestUri}
+            </if>
+            <if test="operatorTime != null">
+                and operator_time = #{operatorTime}
+            </if>
+            <if test="operatorIp != null and operatorIp != ''">
+                and operator_ip = #{operatorIp}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into at.operator(operator_module, request_uri, operator_time, operator_ip)
+        values (#{operatorModule}, #{requestUri}, #{operatorTime}, #{operatorIp})
+    </insert>
+
+    <!--新增所有列 判断null-->
+    <insert id="insertSelective" parameterType="com.ats.entity.Operator">
+        insert into at.operator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="operatorModule != null and operatorModule != ''">
+                operator_module,
+            </if>
+            <if test="requestUri != null and requestUri != ''">
+                request_uri,
+            </if>
+            <if test="operatorTime != null">
+                operator_time,
+            </if>
+            <if test="operatorIp != null and operatorIp != ''">
+                operator_ip,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="operatorModule != null and operatorModule != ''">
+                #{operatorModule},
+            </if>
+            <if test="requestUri != null and requestUri != ''">
+                #{requestUri},
+            </if>
+            <if test="operatorTime != null">
+                #{operatorTime},
+            </if>
+            <if test="operatorIp != null and operatorIp != ''">
+                #{operatorIp},
+            </if>
+        </trim>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update at.operator
+        <set>
+            <if test="operatorModule != null and operatorModule != ''">
+                operator_module = #{operatorModule},
+            </if>
+            <if test="requestUri != null and requestUri != ''">
+                request_uri = #{requestUri},
+            </if>
+            <if test="operatorTime != null">
+                operator_time = #{operatorTime},
+            </if>
+            <if test="operatorIp != null and operatorIp != ''">
+                operator_ip = #{operatorIp},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from at.operator where id = #{id}
+    </delete>
+
+</mapper>
+

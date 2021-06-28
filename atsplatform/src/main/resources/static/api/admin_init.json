@@ -1,0 +1,15 @@
+{
+  "clearInfo": {
+    "clearUrl": "/api/clear.json"
+  },
+  "homeInfo": {
+    "title": "首页",
+    "icon": "fa fa-home",
+    "href": "/page/admin/main.html?t=1"
+  },
+  "logoInfo": {
+    "title": "湖工大档案馆",
+    "image": "/images/logo_1.png",
+    "href": ""
+  }
+}

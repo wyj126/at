@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ats.dao.UndergraduateCurriculumDao">
+
+    <resultMap type="com.ats.entity.UndergraduateCurriculum" id="UndergraduateCurriculumMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="chineseName" column="chinese_name" jdbcType="VARCHAR"/>
+        <result property="englishName" column="english_name" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="credit" column="credit" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UndergraduateCurriculumMap">
+        select
+          id, chinese_name, english_name, start_time, update_time, credit
+        from at.undergraduate_curriculum
+        where id = #{id}
+    </select>
+
+    <!--条件查询（带分页）-->
+    <select id="selectList" parameterType="map" resultMap="UndergraduateCurriculumMap">
+        select
+        id, chinese_name, english_name, start_time, update_time, credit
+        from at.undergraduate_curriculum
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                and chinese_name = #{chineseName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and english_name = #{englishName}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="credit != null">
+                and credit = #{credit}
+            </if>
+        </where>
+        <if test="offset != null and limit !=null">
+            limit ${offset},${limit}
+        </if>
+    </select>
+
+    <!--符合条件总数查询-->
+    <select id="selectListSize" parameterType="map" resultType="java.lang.Integer">
+        select
+        count(*)
+
+        from at.undergraduate_curriculum
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                and chinese_name = #{chineseName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and english_name = #{englishName}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="credit != null">
+                and credit = #{credit}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into at.undergraduate_curriculum(chinese_name, english_name, start_time, update_time)
+        values (#{chineseName}, #{englishName}, #{startTime}, #{updateTime})
+    </insert>
+
+    <!--新增所有列 判断null-->
+    <insert id="insertSelective" parameterType="com.ats.entity.UndergraduateCurriculum">
+        insert into at.undergraduate_curriculum
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                chinese_name,
+            </if>
+            <if test="englishName != null and englishName != ''">
+                english_name,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="credit != null">
+                credit,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                #{chineseName},
+            </if>
+            <if test="englishName != null and englishName != ''">
+                #{englishName},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="credit != null">
+                #{credit},
+            </if>
+        </trim>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update at.undergraduate_curriculum
+        <set>
+            <if test="chineseName != null and chineseName != ''">
+                chinese_name = #{chineseName},
+            </if>
+            <if test="englishName != null and englishName != ''">
+                english_name = #{englishName},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from at.undergraduate_curriculum where id = #{id}
+    </delete>
+
+</mapper>
+

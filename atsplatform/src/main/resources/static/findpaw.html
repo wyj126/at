@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>忘记密码</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<style>
+    .layuimini-container{
+        width: 100%;
+    }
+</style>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-fluid" style="width:80%;">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding-top: 40px;">
+                    <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin-left:-15%;">
+                        <div carousel-item>
+                            <div style="margin-left: 15%">
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">验证方式：</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" lay-filter="verifyType" id="verifyType" name="verifyType" lay-skin="switch" lay-text="手机号|邮箱">
+                                        </div>
+                                    </div>
+                                    <div class="verify-phone hide" style="display: none;">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">手机号：</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="phoneNum" autocomplete="off" placeholder="请输入手机号" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">验证码：</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="phoneNumCheck" autocomplete="off" placeholder="请输入验证码" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-item layui-inline">
+                                                <button type="button" class="layui-btn verify-code" id="sendPhoneCode">发送验证码</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="verify-email" >
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">邮箱：</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="emailCode" placeholder="请输入邮箱地址" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">验证码：</label>
+                                            <div class="layui-form-item layui-inline">
+                                                <input type="text" name="emailCodeCheck" autocomplete="off" placeholder="请输入验证码" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-item layui-inline">
+                                                <button type="button"  class="layui-btn verify-code" id="sendEmailCode">发送验证码</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="formStep">
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div style="margin-left: 15%">
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label ">新的密码：</label>
+                                        <div class="layui-input-block">
+                                            <input type="password" id="newPassword" name="newPassword" lay-verify="PawRequired" lay-reqtext="新密码格式不正确" placeholder="请输入新密码"  value="" class="layui-input">
+                                            <tip><span style="color: red">*</span> 新密码必须8到20位，并且同时包含字母和数字。</tip>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">确认密码：</label>
+                                        <div class="layui-input-block">
+                                            <input type="password" id="againPassword" name="againPassword" lay-verify="PawRequired" lay-reqtext="新密码格式不正确" placeholder="请再输入一遍新密码"  value="" class="layui-input">
+                                            <tip style="display: none;color: red" id="t1">两次输入的密码必须相同</tip>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                                &emsp;确认&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div style="margin-left: 15%">
+                                <div style="text-align: center;margin-top: 20px;">
+                                    <i class="layui-icon layui-circle"
+                                       style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                                    <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                        密码重置成功
+                                    </div>
+                                    <div style="font-size: 14px;color: #666;margin-top: 20px;">请使用新密码登录</div>
+                                </div>
+                                <div style="text-align: center;margin-top: 50px;">
+                                    <button class="layui-btn confirm">确认</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/secret/jsrsasign-all-min.js"></script>
+<script src="/js/secret/jsencrypt.min.js"></script>
+<script src="/js/secret/crypto-js.min.js"></script>
+<script src="secret.js"></script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use([ 'form', 'step','layuimini'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            layer = layui.layer,
+            step = layui.step,
+            layuimini = layui.layuimini;
+
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '500px',
+            stepItems: [{
+                title: '验证身份'
+            }, {
+                title: '确认新密码'
+            }, {
+                title: '完成'
+            }]
+        });
+
+        //自定义验证规则
+        form.verify({
+            PawRequired: [
+                /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{8,20})$/
+                , '密码必须8到20位，字母数字组成'
+            ]
+        });
+
+        var InterValObj; //timer变量，控制时间
+        var count = 60; //间隔函数，1秒执行
+        var curCount;//当前剩余秒数
+        var curId;
+        //发送验证码
+        $("#sendPhoneCode").click(function (){
+            var phone = $("input[name='phoneNum']").val();
+            curCount = count;
+            layer.msg('请稍后...');
+            document.getElementById("sendPhoneCode").setAttribute("disabled","true" );//设置按钮为禁用状态
+            $('#sendPhoneCode').addClass('layui-btn-disabled');
+            $('#sendPhoneCode').text(curCount + "秒后重获");
+            curId = "sendPhoneCode";
+            InterValObj = window.setInterval(SetRemainTime, 1000); // 启动计时器timer处理函数，1秒执行一次
+            $.ajax({
+                url:"/register/sendPhoneCode",
+                data:{phone: phone},
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if (data.code === 0){
+                        layer.msg("发送成功，请注意查收");
+                    }else{
+                        recoveryBtn();
+                        layer.msg(data.msg);
+                    }
+                },
+                error:function(data){
+                    recoveryBtn();
+                    layer.msg("发送失败");
+                }
+            });
+        })
+
+        //发送验证码
+        $("#sendEmailCode").click(function (){
+            var email = $("input[name='emailCode']").val();
+            curCount = count;
+            layer.msg('请稍后...');
+            document.getElementById("sendEmailCode").setAttribute("disabled","true" );//设置按钮为禁用状态
+            $('#sendEmailCode').addClass('layui-btn-disabled');
+            $('#sendEmailCode').text(curCount + "秒后重获");
+            curId = "sendEmailCode";
+            InterValObj = window.setInterval(SetRemainTime, 1000); // 启动计时器timer处理函数，1秒执行一次
+            $.ajax({
+                url:"/user/sendEmailCode",
+                data:{email: email},
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if (data.code === 0){
+                        layer.msg("发送成功，请注意查收");
+                    }else{
+                        recoveryBtn();
+                        layer.msg(data.msg);
+                    }
+                },
+                error:function(data){
+                    recoveryBtn();
+                    layer.msg("发送失败");
+                }
+            });
+        })
+
+
+        //timer处理函数
+        function SetRemainTime(){
+            if(curCount <= 0){
+                recoveryBtn();
+            } else{
+                curCount--;
+                $('#'+curId).text(curCount + "秒后重获");
+            }
+        }
+
+        function recoveryBtn(){
+            $('#'+curId).removeClass('layui-btn-disabled');
+            $('#'+curId).text("重获验证码");
+            window.clearInterval(InterValObj);// 停止计时器
+            document.getElementById(curId).removeAttribute("disabled");//移除禁用状态改为可用
+        }
+
+        //监听指定开关
+        form.on('switch(verifyType)', function (data) {
+            if (this.checked){
+                // $('.verify-phone').slideUp(700) ;
+                // $('.verify-email').slideDown(700) ;
+                $('.verify-phone').css("display","block") ;
+                $('.verify-email').css("display","none") ;
+            }else {
+                $('.verify-phone').css("display","none") ;
+                $('.verify-email').css("display","block") ;
+            }
+        });
+
+        //判断是否验证身份
+        var status = 0;
+        var vType = 1;
+        var phoneOrEamil;
+        //验证验证码
+        function verifyCode(data){
+            var verifyType = $("#verifyType").is(':checked');
+            var code;
+            if (verifyType){
+                if (data.field.phoneNumCheck.length === 0){
+                    layer.msg("请输入短信验证码");
+                    return;
+                }
+                code = data.field.phoneNumCheck;
+                phoneOrEamil = data.field.phoneNum;
+            }else {
+                if (data.field.emailCodeCheck.length === 0){
+                    layer.msg("请输入邮箱验证码");
+                    return;
+                }
+                vType = 2;
+                code = data.field.emailCodeCheck;
+                phoneOrEamil = data.field.emailCode;
+            }
+            delete data.field.phoneNumCheck;
+            delete data.field.emailCodeCheck;
+            data.field.vType = vType;
+            data.field.code = code;
+
+            $.ajax({
+                url:"/user/verifyCode",
+                data: data.field,
+                type:"post",
+                async: false,
+                dataType:"json",
+                success:function(data){
+                    if (data.code === 0){
+                         status = 1;
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function(data){
+                    layer.msg("找回密码失败，请联系管理员");
+                }
+            });
+            return status;
+        }
+
+        var same;
+        //判断两次密码一致性
+        $("#newPassword").bind('input propertychange change',function(){
+            if($("#newPassword").val() != $("#againPassword").val()){
+                $("#t1").css("display","block");
+                same=1;
+            }else{
+                $("#t1").css("display","none");
+                same = 0;
+            }
+        });
+        //判断两次密码一致性
+        $("#againPassword").bind('input propertychange change',function(){
+            if($("#newPassword").val() == $("#againPassword").val()){
+                $("#t1").css("display","none");
+                same=0;
+            }else{
+                $("#t1").css("display","block");
+                same=1;
+            }
+        })
+
+        var iterations = 31;
+        var RSA_puk_length = 1024;
+        var PEM_split = "-----";
+
+        /**
+         * 对RSA密钥对私钥加密 并返回最新密钥对
+         * @param password 初始口令
+         * @returns {{}}
+         * puk 公钥（后端使用）
+         * PEM_puk 标准pem格式公钥
+         * PEM_prk 标准pem格式私钥
+         */
+        function generateKeyByRSAAndPBE(password){
+            //生成RSA密钥对
+            var RSA_keypair = generate_start_RSAKey(RSA_puk_length);
+            //获取RSA私钥
+            var RSA_pem_prk = RSA_keypair.prk;//需要加密的数据 RSA私钥(pem格式)
+
+            //依据密码生成DES口令
+            var DES_key = returnDesKey(password);
+            //对RSA私钥进行加密
+            var security_pem_RSA_prk = encryptByDES(RSA_pem_prk,DES_key.key,DES_key.iv);
+
+            var returnKeyPair = {};
+            returnKeyPair.puk = extract_PEM_Key(RSA_keypair.puk);
+            returnKeyPair.PEM_puk = RSA_keypair.puk;
+            returnKeyPair.PEM_prk = security_pem_RSA_prk;
+            returnKeyPair.salt = DES_key.salt;
+            return returnKeyPair;
+        }
+
+        /**
+         *
+         * @param password 初始密码
+         * @returns {*} des加密令牌、iv、salt
+         */
+        function returnDesKey(password){
+            var saltValue = randomSalt(false,8);
+            var salt = CryptoJS.enc.Hex.parse(saltValue);
+            // PBE according to PKCS#5 v1.5 (in other words: PBKDF1)
+            var md5 = CryptoJS.algo.MD5.create();
+            md5.update(password);
+            md5.update(salt);
+            var result = md5.finalize();
+            md5.reset();
+            for(var i = 1; i < iterations; i++) {
+                md5.update(result);
+                result = md5.finalize();
+                md5.reset();
+            }
+            // splitting key and IV
+            var key = CryptoJS.lib.WordArray.create(result.words.slice(0, 2));
+            var iv = CryptoJS.lib.WordArray.create(result.words.slice(2, 4));
+            var des = {};
+            des.key = key;
+            des.iv = iv ;
+            des.salt = saltValue;
+            return des;
+        }
+
+        function extract_PEM_Key(key) {
+            return key.split(PEM_split)[2];
+        }
+
+        /**
+         * DES加密
+         * @param message 明文
+         * @param key	  令牌
+         * @param iv	  向量
+         * @returns {string} 密文
+         */
+        function encryptByDES(message, key,iv){
+            var keyHex = CryptoJS.enc.Utf8.parse(key);
+            var encrypted = CryptoJS.DES.encrypt(message, keyHex, {
+                iv:iv,
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+            return encrypted.ciphertext.toString();
+        }
+
+
+
+        /**
+         *生成RSA密钥对
+         * @param RSA_puk_length 公钥长度
+         * @param num 密钥对生成依据
+         * @returns {{}} RSA密钥对
+         */
+        function generate_start_RSAKey(RSA_puk_length){
+            // 生产密钥对
+            var rsaKeypair = KEYUTIL.generateKeypair("RSA", RSA_puk_length);
+            // 密钥对象获取pem格式的密钥
+            var pub = KEYUTIL.getPEM(rsaKeypair.pubKeyObj);
+            var prv = KEYUTIL.getPEM(rsaKeypair.prvKeyObj,'PKCS8PRV');
+            var keyPair = {};
+            keyPair.puk = pub;
+            keyPair.prk = prv;
+            return keyPair;
+        }
+        /**
+         * randomSalt 产生任意长度随机字母数字组合
+         * randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+         */
+        function randomSalt(randomFlag, min, max){
+            var str = "",
+                range = min,
+                arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+            // 随机产生
+            if(randomFlag){
+                range = Math.round(Math.random() * (max-min)) + min;
+            }
+            for(var i=0; i<range; i++){
+                pos = Math.round(Math.random() * (arr.length-1));
+                str += arr[pos];
+            }
+            return str;
+        }
+
+        form.on('submit(formStep)', function (data) {
+            var result = verifyCode(data);
+            if (result === 1){
+                step.next('#stepForm');
+                return false;
+            }
+        });
+
+        function findPwd(data){
+            if (status === 0){
+                layer.msg("未验证身份");
+                return false;
+            }else if(status === 1){
+                if (data.field.newPassword != data.field.againPassword || same === 1){
+                    layer.msg("两次密码输入不一致");
+                    return;
+                }
+                var key = generateKeyByRSAAndPBE(data.field.newPassword);
+                data.field.puk = key.PEM_puk;
+                data.field.prk = key.PEM_prk;
+                data.field.salt = key.salt;
+
+                data.field.vType = vType;
+                data.field.password = CryptoJS.SHA3(data.field.newPassword).toString(CryptoJS.enc.Hex);
+                delete data.field.againPassword;
+
+                if (vType === 1){
+                    data.field.phoneNum = phoneOrEamil;
+                }else if(vType === 2){
+                    data.field.emailCode = phoneOrEamil;
+                }
+
+                $.ajax({
+                    url:"/user/replacePass",
+                    data: data.field,
+                    type:"post",
+                    async:false,
+                    dataType:"json",
+                    success:function(data){
+                        if (data.code === 0){
+                            layer.msg("重置密码成功");
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                    },
+                    error:function(data){
+                        layer.msg("重置密码失败");
+                    }
+                });
+                return true;
+            }
+        }
+
+        form.on('submit(formStep2)', function (data) {
+            if (findPwd(data)){
+                step.next('#stepForm');
+                    return false;
+            }else{
+                layer.msg("重置密码失败");
+            }
+
+        });
+
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+
+        $('.confirm').click(function () {
+            window.location.replace("login.html");
+        });
+    })
+</script>
+</body>
+</html>
